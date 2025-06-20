@@ -1,5 +1,7 @@
 
+using WebApplication1.Data;
 using WebApplication1.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureCors();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,11 +28,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.UseCors();
 app.Run(async context =>
 {
+    Console.WriteLine($"Writing the response to the client in the Run method");
     await context.Response.WriteAsync("Hello from the middleware component.");
 });
+app.MapControllers();
 
-
-//app.Run();
+app.Run();
