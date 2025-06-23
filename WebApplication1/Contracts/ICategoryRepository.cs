@@ -1,0 +1,9 @@
+using WebApplication1.Models;
+
+namespace WebApplication1.Contracts
+{
+    public interface ICategoryRepository
+    {
+        IEnumerable<Category> GetAllCategories(bool trackChanges);
+    }
+}

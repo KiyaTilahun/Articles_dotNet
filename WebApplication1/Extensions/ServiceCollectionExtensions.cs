@@ -1,4 +1,7 @@
-﻿namespace WebApplication1.Extensions
+﻿using WebApplication1.Contracts;
+using WebApplication1.Repository;
+
+namespace WebApplication1.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -12,5 +15,9 @@
                            .AllowAnyHeader());
             });
         }
+        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
+        public static void ConfigureServiceManager(this IServiceCollection services) =>
+            services.AddScoped<IServiceManager, ServiceManager>();
     }
 }
