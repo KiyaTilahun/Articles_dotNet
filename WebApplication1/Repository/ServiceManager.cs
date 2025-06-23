@@ -2,7 +2,7 @@ using WebApplication1.Contracts;
 
 namespace WebApplication1.Repository
 {
-    public class ServiceManager:IServiceManager
+    public class ServiceManager : IServiceManager
     {
         private readonly Lazy<ICategoryService> _categoryService;
         private readonly Lazy<IBlogService> _blogService;
@@ -13,7 +13,10 @@ namespace WebApplication1.Repository
             _blogService = new Lazy<IBlogService>(() => new
                 BlogService(repositoryManager));
         }
-        public ICategoryService CompanyService => _categoryService.Value;
-        public IBlogService EmployeeService => _blogService.Value;
+
+
+        public ICategoryService CategoryService => _categoryService.Value;
+
+        public IBlogService BlogService => _blogService.Value;
     }
 }

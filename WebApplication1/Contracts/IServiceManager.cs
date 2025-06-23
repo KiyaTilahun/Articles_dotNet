@@ -1,6 +1,6 @@
 namespace WebApplication1.Contracts
 {
-    public class IServiceManager
+    public interface IServiceManager
     {
         ICategoryService CategoryService { get; }
         IBlogService BlogService { get; }

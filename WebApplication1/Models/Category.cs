@@ -4,8 +4,8 @@
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
-        public ICollection<Blog> Blogs { get; set; }=new List<Blog>();
+        public ICollection<Blog> Blogs { get; set; } = new List<Blog>();
 
-        
+
     }
 }

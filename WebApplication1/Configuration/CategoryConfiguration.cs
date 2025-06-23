@@ -5,8 +5,8 @@ namespace WebApplication1.Configuration
 {
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
-    
-public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Category> builder)
+
+        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Category> builder)
         {
             builder.HasData
             (
@@ -14,14 +14,14 @@ public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityType
             {
                 Id = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                 Name = "Sam Raiden",
-       
-     
+
+
             },
             new Category
             {
                 Id = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
                 Name = "Jana McLeaf",
-            
+
             },
             new Category
             {
