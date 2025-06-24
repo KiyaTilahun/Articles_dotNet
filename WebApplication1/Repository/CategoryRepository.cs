@@ -10,14 +10,21 @@ namespace WebApplication1.Repository
             : base(repositoryContext)
         {
         }
+
+
+
         public IEnumerable<Category> GetAllCategories(bool trackChanges) =>
             FindAll(trackChanges)
                 .OrderBy(c => c.Name)
                 .ToList();
 
         public Category GetCategory(Guid categoryId, bool trackChanges)
- =>
-FindByCondition(c => c.Id.Equals(categoryId), trackChanges)
-.SingleOrDefault();
+             =>
+            FindByCondition(c => c.Id.Equals(categoryId), trackChanges)
+            .SingleOrDefault();
+
+
+        public void CreateCategory(Category category) => Create(category);
     }
+
 }

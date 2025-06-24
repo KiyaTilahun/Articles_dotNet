@@ -16,7 +16,7 @@ namespace WebApplication1.Repository
             .OrderBy(c => c.Title)
             .ToList();
 
-        public Blog GetBlog(Guid categoryId, Guid id, bool trackChanges) => FindByCondition(c => c.Id.Equals(id), trackChanges).SingleOrDefault();
+        public Blog GetBlog(Guid categoryId, Guid id, bool trackChanges) => FindByCondition(c => c.Id.Equals(id), trackChanges).Include(b => b.Category).SingleOrDefault();
     }
 
 }

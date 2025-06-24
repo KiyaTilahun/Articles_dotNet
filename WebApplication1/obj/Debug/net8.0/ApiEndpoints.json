@@ -11,7 +11,7 @@
   },
   {
     "ContainingType": "WebApplication1.Presentation.Controllers.BlogController",
-    "Method": "GetEmployeesForCompany",
+    "Method": "GetBlogsForCategory",
     "RelativePath": "api/categories/{categoryId}/blogs",
     "HttpMethod": "GET",
     "IsController": true,
@@ -19,6 +19,27 @@
     "Parameters": [
       {
         "Name": "categoryId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplication1.Presentation.Controllers.BlogController",
+    "Method": "GetSpecificBlogForCategory",
+    "RelativePath": "api/categories/{categoryId}/blogs/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
         "Type": "System.Guid",
         "IsRequired": true
       }

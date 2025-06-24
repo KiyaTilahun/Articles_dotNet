@@ -6,5 +6,6 @@ namespace WebApplication1.Contracts
     {
         IEnumerable<Category> GetAllCategories(bool trackChanges);
         Category GetCategory(Guid categoryId, bool trackChanges);
+        void CreateCategory(Category category);
     }
 }

@@ -279,4 +279,3 @@ C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\obj\Debug\net8.
 C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\obj\Debug\net8.0\WebApplication1.pdb
 C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\obj\Debug\net8.0\WebApplication1.genruntimeconfig.cache
 C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\obj\Debug\net8.0\ref\WebApplication1.dll
-C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

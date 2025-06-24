@@ -1,5 +1,6 @@
 using WebApplication1.Contracts;
 using WebApplication1.Exceptions;
+using WebApplication1.Models;
 using WebApplication1.Shared.DTOS;
 
 namespace WebApplication1.Repository
@@ -12,6 +13,17 @@ namespace WebApplication1.Repository
             _repository = repository;
         }
 
+        public CategoryDto CreateCategory(CategoryCreationDto category)
+        {
+            var cat = new Category
+            {
+                Name = category.Name
+            };
+            _repository.Category.CreateCategory(cat);
+            _repository.Save();
+            return new CategoryDto(cat.Id, cat.Name);
+        }
+
         public IEnumerable<CategoryDto> GetAllCategories(bool trackChanges)
         {
             try
@@ -19,8 +31,8 @@ namespace WebApplication1.Repository
                 var categories =
                 _repository.Category.GetAllCategories(trackChanges);
                 var categoriesDto = categories.Select(c =>
-new CategoryDto(c.Id, (c.Name + " " + c.Id) ?? ""))
-.ToList();
+                new CategoryDto(c.Id, (c.Name + " " + c.Id) ?? ""))
+                .ToList();
                 return categoriesDto;
             }
             catch (Exception ex)

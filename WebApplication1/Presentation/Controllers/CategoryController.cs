@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Contracts;
+using WebApplication1.Shared.DTOS;
 
 namespace WebApplication1.Presentation.Controllers
 {
@@ -37,6 +38,13 @@ namespace WebApplication1.Presentation.Controllers
             return Ok(company);
 
 
+        }
+
+        [HttpPost]
+        public IActionResult CreateCategory([FromBody] CategoryCreationDto cat)
+        {
+            var category=_categoryService.CategoryService.CreateCategory(cat);
+            return Ok(category);
         }
 
     }

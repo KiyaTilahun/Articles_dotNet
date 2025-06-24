@@ -11,11 +11,23 @@ namespace WebApplication1.Presentation.Controllers
         public BlogController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetEmployeesForCompany(Guid categoryId)
+        public IActionResult GetBlogsForCategory(Guid categoryId)
         {
             var blogs = _service.BlogService.GetAllBlogs(categoryId, trackChanges:
             false);
             return Ok(blogs);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetSpecificBlogForCategory(Guid categoryId, Guid id) // Corrected signature
+        {
+            // You would typically call a service method to get a single blog here
+            var blog = _service.BlogService.GetBlog(categoryId, id, trackChanges: false);
+            if (blog == null)
+            {
+                return NotFound(); // Or a custom error
+            }
+            return Ok(blog);
         }
     }
 }
