@@ -1,4 +1,5 @@
 using WebApplication1.Models;
+using WebApplication1.Shared.DTOS;
 
 namespace WebApplication1.Contracts
 {
@@ -6,5 +7,9 @@ namespace WebApplication1.Contracts
     {
         IEnumerable<Blog> GetAllBlogs(Guid categoryId, bool trackChanges);
         Blog GetBlog(Guid categoryId, Guid id, bool trackChanges);
+        void CreateBlog(Blog blog);
+        void DeleteBlog(Blog blog);
+        // In ICategoryRepository
+       
     }
 }

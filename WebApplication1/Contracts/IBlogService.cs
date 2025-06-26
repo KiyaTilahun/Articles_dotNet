@@ -7,5 +7,7 @@ namespace WebApplication1.Contracts
 
         public IEnumerable<BlogDto> GetAllBlogs(Guid categoryId, bool trackChanges);
         public BlogDto GetBlog(Guid companyId, Guid id, bool trackChanges);
+        public BlogDto CreateBlog(BlogCrationDto blog,Guid categoryId);
+        public void DeleteBlog(Guid categoryId,Guid blog);
     }
 }

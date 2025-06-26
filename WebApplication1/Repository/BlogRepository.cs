@@ -17,6 +17,9 @@ namespace WebApplication1.Repository
             .ToList();
 
         public Blog GetBlog(Guid categoryId, Guid id, bool trackChanges) => FindByCondition(c => c.Id.Equals(id), trackChanges).Include(b => b.Category).SingleOrDefault();
+
+        public void CreateBlog(Blog blog) => RepositoryContext.Set<Blog>().Add(blog);
+        public void DeleteBlog(Blog blog) => Delete(blog);
     }
 
 }

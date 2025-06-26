@@ -1,3 +1,4 @@
+using AutoMapper;
 using WebApplication1.Contracts;
 
 namespace WebApplication1.Repository
@@ -6,12 +7,12 @@ namespace WebApplication1.Repository
     {
         private readonly Lazy<ICategoryService> _categoryService;
         private readonly Lazy<IBlogService> _blogService;
-        public ServiceManager(IRepositoryManager repositoryManager)
+        public ServiceManager(IRepositoryManager repositoryManager,IMapper mapper)
         {
             _categoryService = new Lazy<ICategoryService>(() => new
-                CategoryService(repositoryManager));
+                CategoryService(repositoryManager,mapper));
             _blogService = new Lazy<IBlogService>(() => new
-                BlogService(repositoryManager));
+                BlogService(repositoryManager,mapper));
         }
 
 

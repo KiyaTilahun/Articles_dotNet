@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Contracts;
+using WebApplication1.Shared.DTOS;
 
 namespace WebApplication1.Presentation.Controllers
 {
@@ -18,7 +19,7 @@ namespace WebApplication1.Presentation.Controllers
             return Ok(blogs);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}", Name = "GetBlog")]
         public IActionResult GetSpecificBlogForCategory(Guid categoryId, Guid id) // Corrected signature
         {
             // You would typically call a service method to get a single blog here
@@ -28,6 +29,25 @@ namespace WebApplication1.Presentation.Controllers
                 return NotFound(); // Or a custom error
             }
             return Ok(blog);
+        }
+
+        [HttpPost]
+        public IActionResult CreateBlog([FromBody] BlogCrationDto blog,Guid categoryId)
+        {
+            var newblog=_service.BlogService.CreateBlog(blog,categoryId);
+            
+        return CreatedAtRoute(
+                "GetBlog",
+                new { categoryId = categoryId, id = newblog.Id }, // <-- Provide BOTH route parameters
+                newblog // The object to return in the response body
+            );
+        }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult DeleteBlog(Guid categoryId, Guid id)
+        {
+            _service.BlogService.DeleteBlog(categoryId, id);
+            return NoContent();
         }
     }
 }

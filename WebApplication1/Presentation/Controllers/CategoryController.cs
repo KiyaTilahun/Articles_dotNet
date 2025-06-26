@@ -30,8 +30,8 @@ namespace WebApplication1.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id:guid}")]
-        public IActionResult GetCompany(Guid id)
+        [HttpGet("{id:guid}", Name = "GetCategory")]
+        public IActionResult GetCategory(Guid id)
         {
 
             var company = _categoryService.CategoryService.GetCategory(id, trackChanges: false);
@@ -44,8 +44,24 @@ namespace WebApplication1.Presentation.Controllers
         public IActionResult CreateCategory([FromBody] CategoryCreationDto cat)
         {
             var category=_categoryService.CategoryService.CreateCategory(cat);
-            return Ok(category);
+            return CreatedAtRoute("GetCategory",new {id=category.Id},category);
         }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult DeleteCategory(Guid id)
+        {
+            _categoryService.CategoryService.DeleteCategory(id,false);
+            return NoContent();
+        }
+
+        [HttpPut("{id:guid}")]
+        public IActionResult UpdateCategory([FromBody] UpdateCategoryDto cat,Guid id)
+        {
+            var updated = _categoryService.CategoryService.UpdateCategory(id, cat);
+            return CreatedAtRoute("GetCategory",new {id=id},updated);
+        }
+        
+        
 
     }
 }

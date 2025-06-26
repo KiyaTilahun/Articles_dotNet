@@ -1,3 +1,4 @@
+using AutoMapper;
 using WebApplication1.Contracts;
 using WebApplication1.Exceptions;
 using WebApplication1.Models;
@@ -8,11 +9,14 @@ namespace WebApplication1.Repository
     public class CategoryService : ICategoryService
     {
         private readonly IRepositoryManager _repository;
-        public CategoryService(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+        
+        public CategoryService(IRepositoryManager repository,IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
-
+    
         public CategoryDto CreateCategory(CategoryCreationDto category)
         {
             var cat = new Category
@@ -24,15 +28,29 @@ namespace WebApplication1.Repository
             return new CategoryDto(cat.Id, cat.Name);
         }
 
+        public void DeleteCategory(Guid CategoryId, bool trackChanges)
+        {
+            var cat = _repository.Category.GetCategory(CategoryId, trackChanges);
+           _repository.Category.DeleteCategory(cat);
+           _repository.Save();
+        }
+
+        public CategoryDto UpdateCategory(Guid CategoryId, UpdateCategoryDto category)
+        {
+            var updateCategory = _repository.Category.GetCategory(CategoryId, true);
+            _mapper.Map(category, updateCategory);
+            _repository.Save();
+            return _mapper.Map<CategoryDto>(updateCategory);
+        }
+
+
         public IEnumerable<CategoryDto> GetAllCategories(bool trackChanges)
         {
             try
             {
                 var categories =
                 _repository.Category.GetAllCategories(trackChanges);
-                var categoriesDto = categories.Select(c =>
-                new CategoryDto(c.Id, (c.Name + " " + c.Id) ?? ""))
-                .ToList();
+                var categoriesDto = _mapper.Map<List<CategoryDto>>(categories);
                 return categoriesDto;
             }
             catch (Exception ex)
@@ -42,19 +60,12 @@ namespace WebApplication1.Repository
             }
         }
 
-        public CategoryDto GetCategory(Guid companyId, bool trackChanges)
-        {
-            var category = _repository.Category.GetCategory(companyId, trackChanges);
-
-            if (category is null)
-                throw new CompanyNotFoundException(companyId);
-            return new CategoryDto
-                (
-                    category.Id,
-                   category.Name
-                );
-
-
-        }
+            public CategoryWithBlogDto GetCategory(Guid companyId, bool trackChanges)
+            {
+                var category = _repository.Category.GetCategory(companyId, trackChanges);
+                if (category is null)
+                    throw new CompanyNotFoundException(companyId);
+                return _mapper.Map<CategoryWithBlogDto>(category);
+            }
     }
 }
