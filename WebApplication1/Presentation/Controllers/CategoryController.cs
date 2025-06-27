@@ -43,6 +43,8 @@ namespace WebApplication1.Presentation.Controllers
         [HttpPost]
         public IActionResult CreateCategory([FromBody] CategoryCreationDto cat)
         {
+            if (!ModelState.IsValid) return UnprocessableEntity(ModelState);
+            
             var category=_categoryService.CategoryService.CreateCategory(cat);
             return CreatedAtRoute("GetCategory",new {id=category.Id},category);
         }

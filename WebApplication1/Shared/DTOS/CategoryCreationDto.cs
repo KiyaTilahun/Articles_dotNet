@@ -1,5 +1,5 @@
-﻿namespace WebApplication1.Shared.DTOS
+namespace WebApplication1.Shared.DTOS
 {
-    public record CategoryCreationDto(string Name);
+    public record CategoryCreationDto:CategoryAbstractDto;
 
 }
