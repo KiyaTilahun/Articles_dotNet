@@ -22,6 +22,139 @@ namespace WebApplication1.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("WebApplication1.Models.Blog", b =>
                 {
                     b.Property<Guid>("Id")
@@ -48,142 +181,142 @@ namespace WebApplication1.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9028b685-33c9-4a22-b008-6f2ded3434da"),
+                            Id = new Guid("98d13801-3551-4ff3-a60a-024f95a5268e"),
                             Author = "Author- 1",
                             CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                             Title = "title - 1"
                         },
                         new
                         {
-                            Id = new Guid("6fa2ee0f-f3e2-49e7-a83f-f980ed6d0ce0"),
+                            Id = new Guid("1b5084a0-2f12-470e-aefd-e3c3a441d9ad"),
                             Author = "Author- 2",
-                            CategoryId = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
+                            CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                             Title = "title - 2"
                         },
                         new
                         {
-                            Id = new Guid("19d76285-08df-4bc1-98bf-266b730cea1f"),
+                            Id = new Guid("d207e41b-0e35-4d23-9848-0f937c72c816"),
                             Author = "Author- 3",
-                            CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
+                            CategoryId = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
                             Title = "title - 3"
                         },
                         new
                         {
-                            Id = new Guid("6e28194f-3354-4024-9e97-ea29641b92b3"),
+                            Id = new Guid("96ef2d20-ef19-441c-bb74-2bb1481f4e43"),
                             Author = "Author- 4",
                             CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
                             Title = "title - 4"
                         },
                         new
                         {
-                            Id = new Guid("f41e7c5e-120c-4cbf-b81f-ebdc303aa41e"),
+                            Id = new Guid("757c74e8-5c11-4e65-9a2b-7c1587fbb6a2"),
                             Author = "Author- 5",
-                            CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
+                            CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                             Title = "title - 5"
                         },
                         new
                         {
-                            Id = new Guid("dd596d44-eeb0-48e2-8d51-21814e453e88"),
+                            Id = new Guid("dabe26d0-ac0b-4fcc-8a6e-52b3d01343c4"),
                             Author = "Author- 6",
-                            CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
+                            CategoryId = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
                             Title = "title - 6"
                         },
                         new
                         {
-                            Id = new Guid("9787fd26-7268-4ff2-80db-83a8bed73dbd"),
+                            Id = new Guid("da1e3646-d9da-4db6-8228-b0edf795fbfe"),
                             Author = "Author- 7",
                             CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
                             Title = "title - 7"
                         },
                         new
                         {
-                            Id = new Guid("7219c927-5396-4aaf-99a9-945c068ab6bb"),
+                            Id = new Guid("7ac767af-7af2-4112-9eb7-703c2f516e8d"),
                             Author = "Author- 8",
                             CategoryId = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
                             Title = "title - 8"
                         },
                         new
                         {
-                            Id = new Guid("ba244aab-4906-4c23-ba23-1bd793f2eaf2"),
+                            Id = new Guid("6326ebd9-01b0-46cf-ba33-bf0cd089a136"),
                             Author = "Author- 9",
                             CategoryId = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
                             Title = "title - 9"
                         },
                         new
                         {
-                            Id = new Guid("5719c352-00af-43a9-a9c7-67a3ed9aa2e7"),
+                            Id = new Guid("834f0cd3-b680-4843-845c-4a9ba1f133ae"),
                             Author = "Author- 10",
                             CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                             Title = "title - 10"
                         },
                         new
                         {
-                            Id = new Guid("334b2729-702d-4721-a984-60e8f2c61a3d"),
+                            Id = new Guid("b249d8e9-1e25-4ac5-b2d4-09c845eea505"),
                             Author = "Author- 11",
                             CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                             Title = "title - 11"
                         },
                         new
                         {
-                            Id = new Guid("b01bffa4-093a-44ca-9b10-60f47f3ae2c2"),
+                            Id = new Guid("8461d7d0-a5da-46c9-adf4-d84f83e2b997"),
                             Author = "Author- 12",
-                            CategoryId = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
+                            CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                             Title = "title - 12"
                         },
                         new
                         {
-                            Id = new Guid("b88e6610-64f4-434e-8ee5-a2a9d7e3a511"),
+                            Id = new Guid("c0c8d197-9454-4d88-a1d9-5d3d4404fa40"),
                             Author = "Author- 13",
-                            CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
+                            CategoryId = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
                             Title = "title - 13"
                         },
                         new
                         {
-                            Id = new Guid("b17832c9-6cbd-483e-b83c-04c269c42cb1"),
+                            Id = new Guid("589d90ed-9520-4271-909f-c0adb4fbabd9"),
                             Author = "Author- 14",
                             CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                             Title = "title - 14"
                         },
                         new
                         {
-                            Id = new Guid("3d59a3b4-73d4-43e5-b545-6761a12017a1"),
+                            Id = new Guid("eb28b87f-6739-4234-9310-5822beb55daf"),
                             Author = "Author- 15",
-                            CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
+                            CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                             Title = "title - 15"
                         },
                         new
                         {
-                            Id = new Guid("cdc3fb58-7482-4c95-896d-286774a99a23"),
+                            Id = new Guid("040d2e34-e94e-4ad8-8f1d-17cf1173ef69"),
                             Author = "Author- 16",
-                            CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
+                            CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
                             Title = "title - 16"
                         },
                         new
                         {
-                            Id = new Guid("bf9822df-3461-4f33-85ca-8289b886acf0"),
+                            Id = new Guid("1a4c4405-d512-41d6-81ac-3ce2c5700b4d"),
                             Author = "Author- 17",
-                            CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
+                            CategoryId = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
                             Title = "title - 17"
                         },
                         new
                         {
-                            Id = new Guid("6bc7696e-289c-4bfb-8025-6d3addb93bb0"),
+                            Id = new Guid("3d1dad4d-daf2-4e1d-af1a-9cb6a5f7c417"),
                             Author = "Author- 18",
-                            CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
+                            CategoryId = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
                             Title = "title - 18"
                         },
                         new
                         {
-                            Id = new Guid("b182db71-c172-4e6d-bf3a-327d23ddeb14"),
+                            Id = new Guid("2110d82b-57a8-4236-abfe-bb35e3953bc5"),
                             Author = "Author- 19",
                             CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
                             Title = "title - 19"
                         },
                         new
                         {
-                            Id = new Guid("ff76db7c-0b0a-497a-8229-49f263ec8e33"),
+                            Id = new Guid("9e838b6e-7058-4cba-8811-ab289a666e96"),
                             Author = "Author- 20",
-                            CategoryId = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
+                            CategoryId = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
                             Title = "title - 20"
                         });
                 });
@@ -217,6 +350,122 @@ namespace WebApplication1.Migrations
                             Id = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
                             Name = "Kane Miller"
                         });
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("WebApplication1.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("WebApplication1.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApplication1.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("WebApplication1.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Blog", b =>

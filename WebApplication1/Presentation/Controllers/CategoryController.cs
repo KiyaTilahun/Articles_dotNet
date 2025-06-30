@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Contracts;
 using WebApplication1.Shared.DTOS;
@@ -41,13 +42,36 @@ namespace WebApplication1.Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCategory([FromBody] CategoryCreationDto cat)
+        public async Task<IActionResult> CreateCategory(
+            [FromBody] CategoryCreationDto cat,
+            IValidator<CategoryCreationDto> validator)
         {
-            if (!ModelState.IsValid) return UnprocessableEntity(ModelState);
-            
-            var category=_categoryService.CategoryService.CreateCategory(cat);
-            return CreatedAtRoute("GetCategory",new {id=category.Id},category);
+            var validationResult = await validator.ValidateAsync(cat);
+
+            if (!validationResult.IsValid)
+            {
+                var errorsDictionary = validationResult.Errors
+                    .GroupBy(x => x.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(x => x.ErrorMessage).ToArray()
+                    );
+
+                var problemDetails = new HttpValidationProblemDetails(errorsDictionary)
+                {
+                    Status = StatusCodes.Status422UnprocessableEntity,
+                    Title = "Validation Error",
+                    Detail = "One or more validation errors occurred.",
+                    Instance = HttpContext.Request.Path
+                };
+
+                return UnprocessableEntity(problemDetails);
+            }
+
+            var category = _categoryService.CategoryService.CreateCategory(cat);
+            return CreatedAtRoute("GetCategory", new {id = category.Id}, category);
         }
+    
 
         [HttpDelete("{id:guid}")]
         public IActionResult DeleteCategory(Guid id)

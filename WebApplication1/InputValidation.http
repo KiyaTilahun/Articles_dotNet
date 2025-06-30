@@ -1,0 +1,11 @@
+### POST to create a new Category (Happy Path)
+@endpoint = {{dev.endpoint}}
+
+POST https://localhost:44374/api/categories
+Content-Type: application/json
+
+{
+"Name": "New Fluent"
+}
+
+
