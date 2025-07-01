@@ -10,6 +10,8 @@ namespace WebApplication1.Contracts
         void CreateCategory(Category category);
         void DeleteCategory(Category category);
         void UpdateCategory(Category category,UpdateCategoryDto categoryDto);
+        Task<IEnumerable<Category>> GetAllCategoriesAsync(bool trackChanges);
+        
     
     }
 }

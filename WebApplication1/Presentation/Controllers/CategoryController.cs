@@ -16,6 +16,22 @@ namespace WebApplication1.Presentation.Controllers
 
             _categoryService = service;
         }
+        
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IActionResult> GetCategoriesAsync()
+        {
+            try
+            {
+
+                var categories = await _categoryService.CategoryService.GetAsync(trackChanges: false);
+                return Ok(categories.ToList());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
         [HttpGet]
         public IActionResult GetCategories()
         {

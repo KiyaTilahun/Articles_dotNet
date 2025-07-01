@@ -15,7 +15,16 @@ namespace WebApplication1.Repository
         }
 
 
+            public async Task<IEnumerable<Category>> GetAllCategoriesAsync(bool trackChanges)
+            {
+                var categoriesQuery = await FindAllAsync(trackChanges);
 
+              
+                categoriesQuery = categoriesQuery.Include(a=>a.Blogs).OrderBy(c => c.Name); // Example: always order by name for this method
+                return await categoriesQuery.ToListAsync();
+            }
+                
+            
         public IEnumerable<Category> GetAllCategories(bool trackChanges) =>
             FindAll(trackChanges)
                 .OrderBy(c => c.Name)

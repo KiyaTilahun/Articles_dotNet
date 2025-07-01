@@ -43,6 +43,14 @@ namespace WebApplication1.Repository
             return _mapper.Map<CategoryDto>(updateCategory);
         }
 
+        public async Task<IEnumerable<Category>> GetAsync(bool trackChanges)
+        {
+            var categories =
+                _repository.Category.GetAllCategoriesAsync(trackChanges);
+           
+            return await categories;
+        }
+
 
         public IEnumerable<CategoryDto> GetAllCategories(bool trackChanges)
         {

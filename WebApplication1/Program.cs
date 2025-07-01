@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Threading.RateLimiting;
 using WebApplication1.Contracts;
 using WebApplication1.Data;
 using WebApplication1.Extensions;
@@ -37,6 +38,17 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
+});
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddPolicy("fixed-by-ip", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 3,
+                Window = TimeSpan.FromSeconds(10)
+            }));
 });
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -89,6 +101,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRateLimiter();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
