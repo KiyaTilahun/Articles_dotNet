@@ -4,12 +4,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
 using System.Text;
 using System.Threading.RateLimiting;
 using WebApplication1.Contracts;
 using WebApplication1.Data;
 using WebApplication1.Extensions;
+using WebApplication1.Filters;
 using WebApplication1.Models;
 using WebApplication1.Repository;
 
@@ -17,10 +21,18 @@ using WebApplication1.UserManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddOpenTelemetry(x => x.AddConsoleExporter());
 // Add services to the container.
 builder.Configuration.AddJsonFile("secret.json", optional: true, reloadOnChange: true);
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.AddServerHeader = false; // This prevents Kestrel from adding the "Server" header
+});
+builder.Services.AddScoped<LoggerFilter>();
 builder.Services.AddControllers(config =>
 {
+   
     config.RespectBrowserAcceptHeader = true;
     config.ReturnHttpNotAcceptable = true;
 }).AddXmlDataContractSerializerFormatters()
@@ -28,12 +40,14 @@ builder.Services.AddControllers(config =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureCors();
+builder.Services.AddFluentEmails();
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes:true);
 
 builder.Services.ConfigureRepositoryManager();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddSingleton<TokenProvider>();
 builder.Services.ConfigureServiceManager();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
@@ -110,3 +124,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+
+

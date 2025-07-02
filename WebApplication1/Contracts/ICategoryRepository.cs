@@ -1,5 +1,6 @@
 using WebApplication1.Models;
 using WebApplication1.Shared.DTOS;
+using WebApplication1.Shared.RequestFeatures;
 
 namespace WebApplication1.Contracts
 {
@@ -10,7 +11,7 @@ namespace WebApplication1.Contracts
         void CreateCategory(Category category);
         void DeleteCategory(Category category);
         void UpdateCategory(Category category,UpdateCategoryDto categoryDto);
-        Task<IEnumerable<Category>> GetAllCategoriesAsync(bool trackChanges);
+        Task<PagedList<Category>> GetAllCategoriesAsync(CategoryParameters parameters,bool trackChanges);
         
     
     }

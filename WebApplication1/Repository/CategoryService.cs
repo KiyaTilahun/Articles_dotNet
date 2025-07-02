@@ -3,6 +3,7 @@ using WebApplication1.Contracts;
 using WebApplication1.Exceptions;
 using WebApplication1.Models;
 using WebApplication1.Shared.DTOS;
+using WebApplication1.Shared.RequestFeatures;
 
 namespace WebApplication1.Repository
 {
@@ -43,12 +44,12 @@ namespace WebApplication1.Repository
             return _mapper.Map<CategoryDto>(updateCategory);
         }
 
-        public async Task<IEnumerable<Category>> GetAsync(bool trackChanges)
+        public async Task<(IEnumerable<Category>, MetaData metaData)>  GetAsync(CategoryParameters parameters,bool trackChanges)
         {
-            var categories =
-                _repository.Category.GetAllCategoriesAsync(trackChanges);
-           
-            return await categories;
+            var categories =await 
+                _repository.Category.GetAllCategoriesAsync(parameters,trackChanges);
+           return (Category:categories,metadata:categories.MetaData);
+            
         }
 
 

@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices.ComTypes;
 using WebApplication1.Contracts;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.Shared.DTOS;
+using WebApplication1.Shared.RequestFeatures;
 
 namespace WebApplication1.Repository
 {
@@ -15,13 +17,24 @@ namespace WebApplication1.Repository
         }
 
 
-            public async Task<IEnumerable<Category>> GetAllCategoriesAsync(bool trackChanges)
+            public async Task<PagedList<Category>> GetAllCategoriesAsync(CategoryParameters parameters,bool trackChanges)
             {
-                var categoriesQuery = await FindAllAsync(trackChanges);
-
+                // if (parameters.CheckValidMin())
+                // {
+                //     throw new NotImplementedException("hwllo");
+                // }
+                //
+            
               
-                categoriesQuery = categoriesQuery.Include(a=>a.Blogs).OrderBy(c => c.Name); // Example: always order by name for this method
-                return await categoriesQuery.ToListAsync();
+                
+                var categoriesQuery =  FindByCondition(c=> c.CreatedAt>=parameters.MinCreatedAt,true);
+         
+
+                categoriesQuery = categoriesQuery.OrderBy(c => c.Name);
+               var listNew=await categoriesQuery.ToListAsync();
+               return PagedList<Category>   
+                   .ToPagedList(listNew, parameters.PageNumber,
+                       parameters.PageSize);
             }
                 
             

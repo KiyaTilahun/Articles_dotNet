@@ -4,5 +4,6 @@ namespace WebApplication1.Contracts
     {
         ICategoryService CategoryService { get; }
         IBlogService BlogService { get; }
+        IEmailService EmailService { get; }
     }
 }

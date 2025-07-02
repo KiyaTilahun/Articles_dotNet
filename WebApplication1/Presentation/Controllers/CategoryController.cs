@@ -1,7 +1,10 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using WebApplication1.Contracts;
+using WebApplication1.Filters;
 using WebApplication1.Shared.DTOS;
+using WebApplication1.Shared.RequestFeatures;
 
 namespace WebApplication1.Presentation.Controllers
 {
@@ -19,22 +22,26 @@ namespace WebApplication1.Presentation.Controllers
         
         [HttpGet]
         [Route("GetAll")]
-        public async Task<IActionResult> GetCategoriesAsync()
+        public async Task<IActionResult> GetCategoriesAsync([FromQuery] CategoryParameters parameters)
         {
             try
             {
 
-                var categories = await _categoryService.CategoryService.GetAsync(trackChanges: false);
-                return Ok(categories.ToList());
+                var categories = await _categoryService.CategoryService.GetAsync(parameters,trackChanges: false);
+                Response.Headers.Add("X-Pagination",
+                    JsonSerializer.Serialize(categories.metaData));
+                return Ok(categories.Item1);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
+        [ServiceFilter(typeof(LoggerFilter))]
         [HttpGet]
         public IActionResult GetCategories()
         {
+       
             try
             {
 
@@ -43,7 +50,9 @@ namespace WebApplication1.Presentation.Controllers
             }
             catch (Exception ex)
             {
+                
                 return StatusCode(500, ex.Message);
+                
             }
         }
 

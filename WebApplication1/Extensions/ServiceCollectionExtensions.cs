@@ -19,5 +19,16 @@ namespace WebApplication1.Extensions
             services.AddScoped<IRepositoryManager, RepositoryManager>();
         public static void ConfigureServiceManager(this IServiceCollection services) =>
             services.AddScoped<IServiceManager, ServiceManager>();
+
+
+        public static void AddFluentEmails(this IServiceCollection services)
+        {
+            var defaulEmail = "kk@gmail.com";
+            var host = "localhost";
+            var port=25;
+            
+            services.AddFluentEmail(defaulEmail).AddSmtpSender(host, port);
+
+        }
     }
 }
