@@ -311,3 +311,4 @@ C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\bin\Debug\net8.
 C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\bin\Debug\net8.0\FluentEmail.Core.dll
 C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\bin\Debug\net8.0\FluentEmail.Smtp.dll
+C:\Users\K ET\Documents\MyTrials\WebApplication1\WebApplication1\bin\Debug\net8.0\System.Linq.Dynamic.Core.dll

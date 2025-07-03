@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Runtime.InteropServices.ComTypes;
 using WebApplication1.Contracts;
 using WebApplication1.Data;
+using WebApplication1.Extensions;
 using WebApplication1.Models;
 using WebApplication1.Shared.DTOS;
 using WebApplication1.Shared.RequestFeatures;
@@ -27,10 +28,10 @@ namespace WebApplication1.Repository
             
               
                 
-                var categoriesQuery =  FindByCondition(c=> c.CreatedAt>=parameters.MinCreatedAt,true);
+                var categoriesQuery =  FindByCondition(c=> c.CreatedAt>=parameters.MinCreatedAt,true).Search(parameters.SearchTerm).Sort(parameters.OrderBy);
          
 
-                categoriesQuery = categoriesQuery.OrderBy(c => c.Name);
+                ;
                var listNew=await categoriesQuery.ToListAsync();
                return PagedList<Category>   
                    .ToPagedList(listNew, parameters.PageNumber,
